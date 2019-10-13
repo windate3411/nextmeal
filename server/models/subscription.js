@@ -9,8 +9,10 @@ module.exports = (sequelize, DataTypes) => {
     sub_expired_date: DataTypes.DATE,
     payment_status: DataTypes.STRING
   }, {});
-  Subscription.associate = function(models) {
+  Subscription.associate = function (models) {
     // associations can be defined here
+    Subscription.belongsTo(models.User)
+    Subscription.hasMany(models.Payment)
   };
   return Subscription;
 };

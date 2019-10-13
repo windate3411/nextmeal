@@ -8,8 +8,17 @@ module.exports = (sequelize, DataTypes) => {
     RestaurantId: DataTypes.INTEGER,
     modifiedAt: DataTypes.DATE
   }, {});
-  Meal.associate = function(models) {
+  Meal.associate = function (models) {
     // associations can be defined here
+    Meal.belongsTo(models.Restaurant)
+    Meal.belongsToMany(models.Order, {
+      as: "orders",
+      through: {
+        model: models.OrderItem,
+        unique: false
+      },
+      foreignKey: "MealId"
+    })
   };
   return Meal;
 };

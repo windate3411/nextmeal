@@ -15,8 +15,13 @@ module.exports = (sequelize, DataTypes) => {
     latitude: DataTypes.STRING,
     longitude: DataTypes.STRING
   }, {});
-  User.associate = function(models) {
+  User.associate = function (models) {
     // associations can be defined here
+    User.hasMany(models.Like)
+    User.hasMany(models.Comment)
+    User.hasMany(models.Subscription)
+    User.hasMany(models.Order)
+    User.hasOne(models.Restaurant)
   };
   return User;
 };
