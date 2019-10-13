@@ -1,16 +1,10 @@
-process.env.NODE_ENV = 'test'
+// process.env.NODE_ENV = 'test'
 
 
 var chai = require('chai');
 var sinon = require('sinon');
 chai.use(require('sinon-chai'));
 const { expect } = require('chai')
-
-// describe('User model', function (done) {
-//   it("it is a simple add function", function () {
-//     expect(1).to.be.equal(1)
-//   })
-// })
 
 const {
   sequelize,
@@ -19,12 +13,6 @@ const {
   checkUniqueIndex,
   checkPropertyExists
 } = require('sequelize-test-helpers')
-
-describe('test unit', function () {
-  it('it should return 1', function () {
-    expect(1).to.be.equal(1)
-  })
-})
 
 const db = require('../../models')
 const UserModel = require('../../models/user')
@@ -44,6 +32,42 @@ describe('# UserModel Model', () => {
       'name', 'email', 'password'
     ].forEach(checkPropertyExists(user))
   });
+
+  context('associations', () => {
+    const Subscription = 'Subscription'
+    const Comment = 'Comment'
+    const Like = 'Like'
+    const Order = 'Order'
+    const Restaurant = 'Restaurant'
+    before(() => {
+      User.associate({ Subscription })
+      User.associate({ Comment })
+      User.associate({ Like })
+      User.associate({ Order })
+      User.associate({ Restaurant })
+    })
+
+    it('should have many subscriptions', (done) => {
+      expect(User.hasMany).to.have.been.calledWith(Subscription)
+      done()
+    })
+    it('should have many comments', (done) => {
+      expect(User.hasMany).to.have.been.calledWith(Comment)
+      done()
+    })
+    it('should have many likes', (done) => {
+      expect(User.hasMany).to.have.been.calledWith(Like)
+      done()
+    })
+    it('should have many orders', (done) => {
+      expect(User.hasMany).to.have.been.calledWith(Order)
+      done()
+    })
+    it('should have one restaurant', (done) => {
+      expect(User.hasOne).to.have.been.calledWith(Restaurant)
+      done()
+    })
+  })
   context('action', () => {
     let data = null
 
