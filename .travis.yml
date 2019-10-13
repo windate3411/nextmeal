@@ -18,3 +18,6 @@ before_install:
 before_script:
   - cd server
   - sequelize db:migrate
+
+script:
+  - npm test
